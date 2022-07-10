@@ -1,5 +1,6 @@
 package dev.be.moduleapi.service;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import dev.be.modulecommon.domain.Member;
@@ -10,9 +11,14 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class DemoService {
 
+    @Value("${profile-name}")
+    private String name;
+
     private final MemberRepository memberRepository;
 
     public String save() {
+        System.out.println("env profile : " + name);
+
         Member newMember = memberRepository.save(Member.builder()
                                                        .name(Thread.currentThread().getName())
                                                        .build());
