@@ -2,6 +2,7 @@ plugins {
     id 'org.springframework.boot' version '2.7.1'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
+//    id 'java-library'
 }
 
 group = 'dev.be'
@@ -15,6 +16,27 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    /*
+    api가 아닌 implementation로 선언하면
+    dev.be.moduleapi.service.DemoService.memberRepository가 JpaRepository의 메소드를 사용하지 못한다.
+    */
+
+    /*
+    api 키워드를 사용하기 위해선 2가지 중 1가지 방법으로 선언을 해야 한다.
+
+    1. api를 사용하려는 build.gradle의 plugins에 `id 'java-library'` 추가
+    2. 상위 모듈(=root)에서 'java-library' 추가
+    ex) subprojects {
+            apply plugin: 'java-library'
+        }
+     */
+
+    api 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'mysql:mysql-connector-java'
+
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
 }
 
 tasks.named('test') {

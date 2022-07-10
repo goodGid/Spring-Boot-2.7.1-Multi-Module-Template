@@ -20,3 +20,7 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+subprojects {
+    apply plugin: 'java-library'
+}
