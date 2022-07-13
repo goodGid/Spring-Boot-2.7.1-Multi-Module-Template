@@ -3,7 +3,9 @@ package dev.be.moduleapi.service;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import dev.be.moduleapi.exception.CustomException;
 import dev.be.modulecommon.domain.Member;
+import dev.be.modulecommon.enums.response.CodeEnum;
 import dev.be.modulecommon.repositories.MemberRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -27,5 +29,14 @@ public class DemoService {
 
     public String find() {
         return String.valueOf(memberRepository.findAll().size());
+    }
+
+    public String handleCustomException() {
+        if (true) {
+            System.out.println("Throw CustomException");
+            throw new CustomException(CodeEnum.NOT_IDENTITY_VERIFIED_USER);
+        }
+
+        return "exception";
     }
 }
