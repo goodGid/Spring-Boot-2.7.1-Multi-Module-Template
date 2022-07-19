@@ -19,8 +19,6 @@
 * module-common
 
 
-
-
 ### module간 의존성 설정 방법
 
 * module-api에 위치하는 `build.gradle` 파일 수정
@@ -40,6 +38,23 @@ project(':module-api') {
 } 
 ```
 
+## 살펴볼만한 내용
+
+* Custom Exception 처리
+
+  ex) [GlobalExceptionHandler.class](https://github.com/goodGid/Spring-Boot-2.7.1-Multi-Module-Template/blob/main/module-api/src/main/java/dev/be/moduleapi/exceptionhandler/GlobalExceptionHandler.java#L18)
+
+* Multi Profile 적용
+
+  ex) [DemoService.class -> @Value("${profile-name}")](https://github.com/goodGid/Spring-Boot-2.7.1-Multi-Module-Template/blob/main/module-api/src/main/java/dev/be/moduleapi/service/DemoService.java#L16)
+
+* Module간 관계 설정
+
+  ex) [module-api -> build.gradle](https://github.com/goodGid/Spring-Boot-2.7.1-Multi-Module-Template/blob/main/module-api/build.gradle#L27)
+
+* 하위 Module Bean Scan
+
+  ex) [ModuleApiApplication.class](https://github.com/goodGid/Spring-Boot-2.7.1-Multi-Module-Template/blob/main/module-api/src/main/java/dev/be/ModuleApiApplication.java)
 
 ## Reference
 
