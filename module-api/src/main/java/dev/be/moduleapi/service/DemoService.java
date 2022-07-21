@@ -7,6 +7,7 @@ import dev.be.moduleapi.exception.CustomException;
 import dev.be.modulecommon.domain.Member;
 import dev.be.modulecommon.enums.response.CodeEnum;
 import dev.be.modulecommon.repositories.MemberRepository;
+import dev.be.modulecommon.service.CommonDemoService;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -18,8 +19,11 @@ public class DemoService {
 
     private final MemberRepository memberRepository;
 
+    private final CommonDemoService commonDemoService;
+
     public String save() {
         System.out.println("env profile : " + name);
+        System.out.println("commonDemoService.getName() : " + commonDemoService.getModuleName());
 
         Member newMember = memberRepository.save(Member.builder()
                                                        .name(Thread.currentThread().getName())
