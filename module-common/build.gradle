@@ -44,3 +44,61 @@ tasks.named('test') {
 }
 
 tasks.register("prepareKotlinBuildScriptModel") {}
+
+/*
+[tasks.bootJar 기본 값 : true]
+
+`bootJar` 옵션을 true로 설정하면 'xxx.jar' 파일이 생성된다.
+ex) module-common-0.0.1-SNAPSHOT.jar
+이렇게 생성된 'jar' 파일은
+그 파일 안에 Application을 실행시키는 데 필요한
+[dependencies / classes / resources]을 포함하고 있어
+`java -jar` 옵션으로 jar 파일을 실행시킬 수 있다.
+
+그런데 Common Module은
+다른 Module에서 참조하는 목적의 Module이므로
+실행 가능한 jar 파일을 생성할 필요가 없다.
+그러므로 `ModuleCommonApplication.class`는 존재할 필요가 없다.
+그러므로 Common Module에서는
+bootJar 옵션값을 false로 설정한다.
+
+만약 bootJar 옵션을 true로 주면
+Main.class를 찾게 되는데
+Common Module에서는 Api Module처럼
+ModuleApiApplication.class가 없으므로 다음과 같은 에러가 발생한다.
+ex) Caused by: org.gradle.api.InvalidUserDataException: Main class name has not been configured and it could not be resolved
+ */
+tasks.bootJar { enabled = false }
+
+/*
+[tasks.jar 기본 값 : true]
+
+`jar` 옵션을 true로 설정하면 'xxx-plain.jar' 파일이 생성된다.
+ex) module-common-0.0.1-SNAPSHOT-plain.jar
+이렇게 생성된 '-plain.jar' 파일은 'jar' 파일과는 다르게
+'dependencies'를 제외한 [classes / resources]만을 포함하고 있어
+`java -jar` 옵션으로 jar 파일을 실행시킬 수 없다.
+
+Common Module에서는 Api Module에서 사용할
+[classes / resources]만 존재하면 되므로
+jar 옵션값을 true로 설정한다.
+ */
+tasks.jar { enabled = true }
+
+/*
+[참고]
+- root project에서 Gradle 빌드 명령어를 실행한다.
+  ex) pwd 입력 시 "$HOME/xxx/yyy/Spring-Boot-2.7.1-Multi-Module-Template"
+- Api module을 실행시킬 jar 파일이 생성된 경로로 이동한다.
+  ex) cd module-api/build/libs/
+- 해당 Path로 이동 후 java -jar 명령어를 실행한다.
+  ex) java -jar module-api-0.0.1-SNAPSHOT.jar
+
+[Multi Module에서 Gradle 빌드 명령어 + jar 파일 실행 CLI]
+- Gradle 빌드 명령어 :: root project
+  -> ./gradlew clean :module-api:buildNeeded --stacktrace --info --refresh-dependencies -x test
+- profile 지정 X
+  -> java -jar module-api-0.0.1-SNAPSHOT.jar
+- profile 지정 O
+  -> java -jar -Dspring.profiles.active=local module-api-0.0.1-SNAPSHOT.jar
+ */
