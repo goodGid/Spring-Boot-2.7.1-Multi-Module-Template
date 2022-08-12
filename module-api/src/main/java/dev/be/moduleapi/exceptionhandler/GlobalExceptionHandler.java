@@ -16,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(CustomException.class)
-    public CommonResponse<?> handlerCustomExceptionException(CustomException e) {
+    public CommonResponse<?> handlerCustomException(CustomException e) {
         return getCommonResponse(e.getReturnCode(), e.getReturnMessage());
     }
 
